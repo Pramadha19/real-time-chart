@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#myChart{
+    width: 70%;
+    height: 100vh;
+    margin: auto;
+    margin-top: 70px;
+   
+}
+h1{
+    font-size: xx-large;
+    font-family: sans-serif;
+    text-align: center;
+    margin-bottom: 100px;
+    background-color: #0e492f;
+    width: 32%;
+    margin: auto;
+    color: white;
+}
+h1 span{
+    font-size: xx-small;
+}

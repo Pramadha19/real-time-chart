@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1> SALES <span>(per month)</span></h1>
+    <div style="width: 80%; margin: auto;">
+        <canvas id="realTimeChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('realTimeChart').getContext('2d');
+        let chart;
+
+        // Initial data
+        const initialData = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            datasets: [{
+                label: 'Sales',
+                data: [],
+                borderColor: [],
+                backgroundColor: [],
+                borderWidth: 1,
+                fill: false,
+            }],
+        };
+
+        // Chart configuration
+        const chartConfig = {
+            type: 'line',
+            data: initialData,
+            options: {
+                scales: {
+                    x: {
+                        type: 'category',
+                        position: 'bottom',
+                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                        title: {
+                            display: true,
+                            text: 'Month',
+                        },
+                    },
+                    y: {
+                        type: 'linear',
+                        position: 'left',
+                        min: 0,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Sales',
+                        },
+                    },
+                },
+                animation: true,
+            },
+        };
+
+        // Initialize the chart
+        chart = new Chart(ctx, chartConfig);
+
+        // Function to generate a random color in hexadecimal format
+        function generateRandomColor() {
+            const red = Math.floor(Math.random() * 256);
+            const green = Math.floor(Math.random() * 256);
+            const blue = Math.floor(Math.random() * 256);
+            return `rgba(${red}, ${green}, ${blue}, 0.6)`;
+        }
+
+        // Function to add data
+        function addData() {
+            const currentDataLength = chart.data.datasets[0].data.length;
+            const newData = Math.floor(Math.random() * 100); // Generate random value between 0 and 100
+            const newColor = generateRandomColor(); // Generate random color
+
+            chart.data.labels.push(chart.data.labels[currentDataLength % 12]); // Loop through months
+            chart.data.datasets[0].data.push(newData);
+            chart.data.datasets[0].borderColor.push(newColor);
+            chart.data.datasets[0].backgroundColor.push(newColor);
+            chart.update(); // Update the chart
+        }
+
+        // Add data at regular intervals (e.g., every 1 second)
+        setInterval(addData, 1000);
+    </script>
+</body>
+</html>
